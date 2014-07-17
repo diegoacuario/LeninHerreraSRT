@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Properties;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,12 +17,12 @@ public class Principal extends JFrame {
     private int tLLegada;
     private JButton jbAgregar, jbEjcutar, jbEjecutarOtro;
     private JComboBox jcTiemRag;
-    private JLabel ljTiemRaf, jlNomPro, jlOrden, jlTiemPro, jlTieTot,jlTieTot1, jlMenCons;
+    private JLabel ljTiemRaf, jlNomPro, jlOrden, jlTiemPro, jlTieTot, jlTieTot1, jlMenCons;
     private JPanel jPanel2;
     private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
     private JTable jtbDatos;
     private JTextArea jTextArea1;
-    private JTextField jtNomPro, jtPro, jtTot,jtPro1;
+    private JTextField jtNomPro, jtPro, jtTot, jtPro1;
     private ArrayList<Proces> procesos = new ArrayList<>(), procesosOrdenados = new ArrayList<>();
 
     private final PlanSRT pSJF = new PlanSRT();
@@ -48,7 +49,7 @@ public class Principal extends JFrame {
         jScrollPane3 = new JScrollPane();
         jPanel2 = new JPanel();
         jlTieTot = new JLabel();
-        jlTieTot1= new JLabel();
+        jlTieTot1 = new JLabel();
         jtPro = new JTextField();
         jtPro1 = new JTextField();
         jlTiemPro = new JLabel();
@@ -135,16 +136,16 @@ public class Principal extends JFrame {
         jtPro1.setFont(new Font("Calibri", 0, 14));
         getContentPane().add(jtPro);
         getContentPane().add(jtPro1);
-        jtPro.setBounds(625, 164, 57, 23);
-        jtPro1.setBounds(625, 210, 57, 23);
+        jtPro.setBounds(625, 164, 90, 23);
+        jtPro1.setBounds(625, 210, 90, 23);
         jlTiemPro.setFont(new Font("Calibri", 1, 14));
-        jlTiemPro.setText("Promedio de respuesta ");
+        jlTiemPro.setText("Promedio de respuesta");
         getContentPane().add(jlTiemPro);
         jlTiemPro.setBounds(484, 141, 198, 17);
         jtTot.setEditable(false);
         jtTot.setFont(new Font("Calibri", 0, 14));
         getContentPane().add(jtTot);
-        jtTot.setBounds(627, 256, 55, 23);
+        jtTot.setBounds(627, 256, 90, 23);
         jbEjecutarOtro.setFont(new Font("Calibri", 1, 14));
         jbEjecutarOtro.setText("Ejecutar con otro datos");
         jbEjecutarOtro.setToolTipText("Ejecuta nuevamente el programa");
@@ -172,6 +173,10 @@ public class Principal extends JFrame {
     private void accionBotonAgregar(ActionEvent evt) {
         String nombre = jtNomPro.getText();
         int tiempo = jcTiemRag.getSelectedIndex();
+        if (tLLegada < 9) {
+
+            jcTiemRag.setSelectedIndex(tLLegada + 1);
+        }
         Proces p = new Proces(nombre, tiempo, tLLegada);
         if (!pSJF.proEncontrado(p, procesos)) {
             procesos.add(p);
@@ -223,6 +228,16 @@ public class Principal extends JFrame {
     }
 
     public static void main(String args[]) {
+        try {
+            Properties props = new Properties();
+            props.put("logoString", "brand new");
+//            UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
+//            UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
+
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            System.out.println(e);
+        }
         new Principal().setVisible(true);
     }
 
