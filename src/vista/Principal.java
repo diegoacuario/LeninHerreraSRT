@@ -25,7 +25,7 @@ public class Principal extends JFrame {
     private JTextField jtNomPro, jtPro, jtTot, jtPro1;
     private ArrayList<Proces> procesos = new ArrayList<>(), procesosOrdenados = new ArrayList<>();
 
-    private final PlanSRT pSJF = new PlanSRT();
+    private final PlanSRT pSRT = new PlanSRT();
 
     @SuppressWarnings("empty-statement")
     public Principal() {
@@ -178,21 +178,21 @@ public class Principal extends JFrame {
             jcTiemRag.setSelectedIndex(tLLegada + 1);
         }
         Proces p = new Proces(nombre, tiempo, tLLegada);
-        if (!pSJF.proEncontrado(p, procesos)) {
+        if (!pSRT.proEncontrado(p, procesos)) {
             procesos.add(p);
             tLLegada++;
-            procesosOrdenados = pSJF.ordenarProces(procesos);
-            pSJF.agregarADiagramaGant(jPanel2, procesosOrdenados);
+            procesosOrdenados = pSRT.ordenarProces(procesos);
+            pSRT.agregarADiagramaGant(jPanel2, procesosOrdenados);
             if (procesos.size() % 2 == 0) {
                 setSize(800, 600);
             } else {
                 setSize(800, 601);
             }
-            jtbDatos.setModel(new DefaultTableModel(pSJF.convertirAMatriz(procesosOrdenados), new String[]{"Nombre", "Tiempo"}));
+            jtbDatos.setModel(new DefaultTableModel(pSRT.convertirAMatriz(procesosOrdenados), new String[]{"Nombre", "Tiempo"}));
             jtNomPro.setText("Proceso" + (procesosOrdenados.size() + 1));
-            jtPro.setText(pSJF.durPromedioDeProcces(procesosOrdenados) + " seg.");
-            jtPro1.setText(pSJF.durPromedioDeProccesEspera(procesosOrdenados) + " seg.");
-            jtTot.setText(pSJF.durTotal(procesosOrdenados) + " seg.");
+            jtPro.setText(pSRT.durPromedioDeProcces(procesosOrdenados) + " seg.");
+            jtPro1.setText(pSRT.durPromedioDeProccesEspera(procesosOrdenados) + " seg.");
+            jtTot.setText(pSRT.durTotal(procesosOrdenados) + " seg.");
         } else {
             JOptionPane.showMessageDialog(this, "Proceso " + p.getStrNombre()
                     + " ya fue agregado");
